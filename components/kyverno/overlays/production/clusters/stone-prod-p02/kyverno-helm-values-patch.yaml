@@ -1,0 +1,27 @@
+# stone-prod-p02 specific configuration
+# Only include values that differ from the production defaults
+
+config:
+  updateRequestThreshold: 4000
+
+admissionController:
+  container:
+    resources:
+      requests:
+        cpu: 6000m
+        memory: 4Gi
+      limits:
+        cpu: 6000m
+        memory: 4Gi
+
+backgroundController:
+  extraArgs:
+    clientRateLimitBurst: 2000
+    clientRateLimitQPS: 2000
+  resources:
+    requests:
+      cpu: 6000m
+      memory: 4Gi
+    limits:
+      cpu: 6000m
+      memory: 4Gi

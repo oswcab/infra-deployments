@@ -1,0 +1,78 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kyverno-centralized
+spec:
+  generators:
+    - merge:
+        mergeKeys:
+          - nameNormalized
+        generators:
+          - clusters:
+              values:
+                sourceRoot: components/kyverno
+                environment: staging
+                clusterDir: "empty-base"
+                useNewStructure: false
+          - list:
+              elements:
+                # Staging clusters - keep using old structure for now
+                - nameNormalized: stone-stg-rh01
+                  values.clusterDir: stone-stg-rh01
+                  values.useNewStructure: false
+                - nameNormalized: stone-stage-p01
+                  values.clusterDir: stone-stage-p01
+                  values.useNewStructure: false
+                # Production clusters - migrate to new structure
+                - nameNormalized: stone-prd-rh01
+                  values.clusterDir: stone-prd-rh01
+                  values.useNewStructure: true
+                - nameNormalized: kflux-prd-rh02
+                  values.clusterDir: kflux-prd-rh02
+                  values.useNewStructure: true
+                - nameNormalized: stone-prod-p01
+                  values.clusterDir: stone-prod-p01
+                  values.useNewStructure: true
+                - nameNormalized: stone-prod-p02
+                  values.clusterDir: stone-prod-p02
+                  values.useNewStructure: true
+                - nameNormalized: kflux-ocp-p01
+                  values.clusterDir: kflux-ocp-p01
+                  values.useNewStructure: true
+                - nameNormalized: kflux-prd-rh03
+                  values.clusterDir: kflux-prd-rh03
+                  values.useNewStructure: true
+                - nameNormalized: kflux-rhel-p01
+                  values.clusterDir: kflux-rhel-p01
+                  values.useNewStructure: true
+                - nameNormalized: kflux-osp-p01
+                  values.clusterDir: kflux-osp-p01
+                  values.useNewStructure: true
+                - nameNormalized: pentest-p01
+                  values.clusterDir: pentest-p01
+                  values.useNewStructure: true
+  template:
+    metadata:
+      name: kyverno-{{nameNormalized}}
+    spec:
+      project: default
+      source:
+        path: '{{if .values.useNewStructure}}{{values.sourceRoot}}/overlays/{{values.environment}}/clusters/{{values.clusterDir}}{{else}}{{values.sourceRoot}}/{{values.environment}}/{{values.clusterDir}}{{end}}'
+        repoURL: https://github.com/redhat-appstudio/infra-deployments.git
+        targetRevision: main
+      destination:
+        namespace: konflux-kyverno
+        server: '{{server}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+        retry:
+          limit: 50
+          backoff:
+            duration: 10s
+            factor: 2
+            maxDuration: 3m

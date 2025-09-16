@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: konflux-kyverno-migrate-resources
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrate-resources
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256M
+            limits:
+              cpu: 400m
+              memory: 256M

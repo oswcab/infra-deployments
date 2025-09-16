@@ -1,0 +1,70 @@
+fullnameOverride: konflux-kyverno
+namespaceOverride: konflux-kyverno
+config:
+  preserve: false
+
+# Common security context for all containers
+commonSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  capabilities:
+    drop:
+    - "ALL"
+
+# Common init container security context
+commonInitSecurityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  capabilities:
+    drop:
+    - "ALL"
+
+# Common metering configuration
+commonMetering:
+  disabled: false
+
+# Common service monitor configuration
+commonServiceMonitor:
+  enabled: true
+  # kyverno doesn't seem to support HTTPS on metrics
+  secure: false
+
+# Common features configuration
+features:
+  admissionReports:
+    enabled: false
+  aggregateReports:
+    enabled: false
+  policyReports:
+    enabled: false
+  validatingAdmissionPolicyReports:
+    enabled: false
+  reporting:
+    validate: false
+    mutate: false
+    mutateExisting: false
+    imageVerify: false
+    generate: false
+
+# Common CRD migration security context
+crds:
+  migration:
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+      runAsGroup: null
+      runAsUser: null
+      capabilities:
+        drop:
+        - "ALL"
+
+# Common cleanup controllers configuration
+policyReportsCleanup:
+  enabled: false
+webhooksCleanup:
+  enabled: false
+reportsController:
+  enabled: false

@@ -1,0 +1,3 @@
+# kflux-rhel-p01 specific configuration
+# This cluster uses the default production resource settings
+# No overrides needed - inherits all settings from production overlay
