@@ -40,7 +40,7 @@ const (
 
 func main() {
 	var (
-		repoRoot    = flag.String("repo-root", ".", "Path to the repository root")
+		repoRoot    = flag.String("repo-root", "", "Path to the repository root (default: auto-detect via git)")
 		baseRef     = flag.String("base-ref", "", "Base git ref to compare against (default: merge-base with main)")
 		overlaysDir = flag.String("overlays-dir", "argo-cd-apps/overlays", "Path to overlays directory relative to repo root")
 		color       = flag.String("color", "auto", "Color output: auto, always, never")
@@ -73,6 +73,15 @@ func main() {
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
+
+	// Auto-detect repo root via git if not specified.
+	if *repoRoot == "" {
+		detected, err := git.TopLevel(ctx)
+		if err != nil {
+			logging.Fatal("auto-detecting repo root; use --repo-root to specify explicitly", "err", err)
+		}
+		repoRoot = &detected
+	}
 
 	absRepoRoot, err := filepath.Abs(*repoRoot)
 	if err != nil {

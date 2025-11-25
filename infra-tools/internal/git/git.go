@@ -10,6 +10,17 @@ import (
 	"strings"
 )
 
+// TopLevel returns the root directory of the git repository that contains
+// the current working directory.
+func TopLevel(ctx context.Context) (string, error) {
+	cmd := exec.CommandContext(ctx, "git", "rev-parse", "--show-toplevel")
+	out, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("git rev-parse --show-toplevel: %w", err)
+	}
+	return strings.TrimSpace(string(out)), nil
+}
+
 // ResolveRef resolves a git ref (branch, tag, symbolic name, etc.) to its
 // short commit SHA.
 func ResolveRef(ctx context.Context, repoRoot, ref string) (string, error) {
