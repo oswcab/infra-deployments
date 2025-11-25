@@ -2,8 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
-# Remove this comment to rotate dex and proxy secrets (now in ../base)
-# Uncomment the line in ../base/kustomization.yaml instead
 
 configMapGenerator:
   - name: dex
