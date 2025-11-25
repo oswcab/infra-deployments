@@ -5,6 +5,10 @@ resources:
   - proxy
   - route-and-oauth.yaml
   - ../../base
+# Uncomment below to rotate dex and proxy secrets
+# NOTE: 3 environments (kflux-osp-p01, kflux-rhel-p01, pentest-p01) use different
+# images and include their own file - comment this out when those are active
+#  - configure-oauth-proxy-secret.yaml
 
 images:
   - name: quay.io/konflux-ci/workspace-manager

@@ -2,6 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ../base
+# This environment uses a different image version, so it includes its own file
+# (conflicts with ../base if both are uncommented)
   - configure-oauth-proxy-secret.yaml
 
 configMapGenerator:
