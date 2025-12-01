@@ -12,6 +12,7 @@ spec:
       namespace: crossplane-system
       name: testplatform-appci-cluster
       key: kubeconfig
+  dataFrom: []
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret

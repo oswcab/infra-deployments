@@ -8,7 +8,10 @@ metadata:
 spec:
   dataFrom:
     - extract:
+        conversionStrategy: Default
+        decodingStrategy: None
         key: production/build/konflux-ci-pull-request-builds-pruner-token
+        metadataPolicy: None
   refreshInterval: 20h
   secretStoreRef:
     kind: ClusterSecretStore
