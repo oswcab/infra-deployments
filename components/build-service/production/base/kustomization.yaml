@@ -2,7 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ../../base
-- ../../base/external-secrets
 - https://github.com/konflux-ci/build-service/config/default?ref=affd5b51b3d597ae73a84702e82da7df215915db
 
 namespace: build-service
@@ -16,13 +15,8 @@ commonAnnotations:
   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 
 patches:
-  - path: pipelines-as-code-secret-patch.yaml
-    target:
-      name: pipelines-as-code-secret
-      kind: ExternalSecret
-      group: external-secrets.io
-      version: v1beta1
   - path: manager_resources_patch.yaml
 
 components:
   - ../../components/rh-certs
+  - ../../components/production-secrets
