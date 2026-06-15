@@ -1118,6 +1118,11 @@ CONFIG_COMBINATIONS: Dict[str, ConfigCombination] = {
         "name": "Production p02 config",
         "config_file": "components/kueue/production/stone-prod-p02/config.yaml",
         "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
+    },
+    "production-kflux-osp-p01": {
+        "name": "Production OSP config",
+        "config_file": "components/kueue/production/kflux-osp-p01/config.yaml",
+        "kustomization_file": "components/kueue/production/base/tekton-kueue/kustomization.yaml"
     }
 }
 
@@ -1304,6 +1309,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "2",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-arm64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
@@ -1319,7 +1325,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "release_managed",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-release"
@@ -1331,6 +1339,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-mintmaker": "1",
             },
             "labels": {
@@ -1343,7 +1352,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "internal_pipelinerun_child",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-release"
@@ -1356,6 +1367,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "2",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
                 "kueue.konflux-ci.dev/requests-linux-arm64": "1",
@@ -1371,7 +1383,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_build",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "2",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
@@ -1382,7 +1396,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_test",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-test",
@@ -1393,7 +1409,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "nudge_pipelinerun",
         "config_key": "production",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "2",
+            },
             "labels": {
                 "build.appstudio.openshift.io/type": "nudge",
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
@@ -1408,6 +1426,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-kflux-ocp-p01",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "2",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
                 "kueue.konflux-ci.dev/requests-linux-arm64": "1",
@@ -1461,6 +1480,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-kflux-ocp-p01",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "2",
                 "kueue.konflux-ci.dev/requests-linux-amd64": "1",
                 "kueue.konflux-ci.dev/requests-linux-s390x": "1",
                 "kueue.konflux-ci.dev/requests-linux-ppc64le": "1",
@@ -1480,7 +1500,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "ocp_prod_release",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-prod-release"
@@ -1491,7 +1513,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "ocp_stage_release",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-stage-release"
@@ -1503,7 +1527,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_build",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "2",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
@@ -1514,7 +1540,9 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "pipelinerun_key": "gitlab_merge_request_test",
         "config_key": "production-kflux-ocp-p01",
         "expected": {
-            "annotations": {},
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-pre-merge-test",
@@ -1528,6 +1556,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-stone-prod-p02",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-konflux-release": "1",
             },
             "labels": {
@@ -1541,6 +1570,7 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-stone-prod-p02",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-konflux-release": "1",
             },
             "labels": {
@@ -1554,11 +1584,71 @@ TEST_COMBINATIONS: Dict[str, TestCombination] = {
         "config_key": "production-stone-prod-p02",
         "expected": {
             "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
                 "kueue.konflux-ci.dev/requests-konflux-release": "1",
             },
             "labels": {
                 "kueue.x-k8s.io/queue-name": "pipelines-queue",
                 "kueue.x-k8s.io/priority-class": "konflux-release"
+            }
+        }
+    },
+
+    # Test key PipelineRuns with production kflux-osp-p01 config
+    # OSP cluster uses 1 token for all PLRs (no build distinction)
+    "multiplatform_new_production-kflux-osp-p01": {
+        "pipelinerun_key": "multiplatform_new",
+        "config_key": "production-kflux-osp-p01",
+        "expected": {
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+                "kueue.konflux-ci.dev/requests-linux-amd64": "1",
+                "kueue.konflux-ci.dev/requests-linux-arm64": "1",
+                "kueue.konflux-ci.dev/requests-linux-s390x": "1",
+                "kueue.konflux-ci.dev/requests-aws-ip": "2"
+            },
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-post-merge-build"
+            }
+        }
+    },
+    "release_managed_production-kflux-osp-p01": {
+        "pipelinerun_key": "release_managed",
+        "config_key": "production-kflux-osp-p01",
+        "expected": {
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-release"
+            }
+        }
+    },
+    "gitlab_merge_request_production-kflux-osp-p01": {
+        "pipelinerun_key": "gitlab_merge_request_build",
+        "config_key": "production-kflux-osp-p01",
+        "expected": {
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-build",
+            }
+        }
+    },
+    "gitlab_merge_request_test_production-kflux-osp-p01": {
+        "pipelinerun_key": "gitlab_merge_request_test",
+        "config_key": "production-kflux-osp-p01",
+        "expected": {
+            "annotations": {
+                "kueue.konflux-ci.dev/requests-konflux-ci-dev-token": "1",
+            },
+            "labels": {
+                "kueue.x-k8s.io/queue-name": "pipelines-queue",
+                "kueue.x-k8s.io/priority-class": "konflux-pre-merge-test",
             }
         }
     },
